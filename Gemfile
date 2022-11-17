@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
+source('https://rubygems.org')
+
 source('https://rubygems.org') do
-  gem('algorithms')
-  gem('benchmark')
-  gem('pry')
-  gem('rubocop')
+  gem('benchmark', '~> 0.2.0')
+  gem('bundler', '~> 2.3.26')
+  gem('pry', '~> 0.14.1')
+  gem('require_all', '~> 3.0.0')
+  gem('rubocop', '~> 1.38.0')
 end
