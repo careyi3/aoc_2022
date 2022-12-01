@@ -7,8 +7,8 @@ class FileReader
     end
 
     def for_each_line(path)
-      File.readlines(path).each do |line| # rubocop:disable Style/ExplicitBlockArgument
-        yield(line)
+      File.readlines(path).each do |line|
+        yield(line.strip)
       end
     end
   end
