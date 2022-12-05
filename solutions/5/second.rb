@@ -2,12 +2,12 @@
 
 module Day5
   module Part2
-    def self.run(path)
-      # sample = {
-      #   1 => %w[Z N],
-      #   2 => %w[M C D],
-      #   3 => %w[P]
-      # }
+    def self.run(path, input_source)
+      sample = {
+        1 => %w[Z N],
+        2 => %w[M C D],
+        3 => %w[P]
+      }
 
       input = {
         1 => %w[F H B V R Q D P],
@@ -21,7 +21,12 @@ module Day5
         9 => %w[V W N C D]
       }
 
-      state = input
+      state =
+        if input_source == 'input'
+          input
+        else
+          sample
+        end
 
       FileReader.for_each_line(path) do |line|
         command = line.split

@@ -14,7 +14,7 @@ module Day2
       'C Z' => 3 + 3
     }.freeze
 
-    def self.run(path)
+    def self.run(path, _)
       sum = 0
 
       FileReader.for_each_line(path) do |line|

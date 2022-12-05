@@ -18,5 +18,5 @@ input = ARGV[2] || 'sample'
 path = "#{__dir__}/solutions/#{day}/#{input}"
 
 Instrument.time do
-  eval("Day#{day}::Part#{part}", binding, __FILE__, __LINE__).run(path) # rubocop:disable Security/Eval
+  eval("Day#{day}::Part#{part}", binding, __FILE__, __LINE__).run(path, input) # rubocop:disable Security/Eval
 end

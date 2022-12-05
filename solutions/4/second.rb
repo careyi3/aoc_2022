@@ -2,7 +2,7 @@
 
 module Day4
   module Part2
-    def self.run(path)
+    def self.run(path, _)
       count = 0
       FileReader.for_each_line(path) do |line|
         input = line.split(',').map { |x| x.split('-') }

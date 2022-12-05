@@ -31,7 +31,7 @@ module Day3
       'z' => 26
     }.freeze
 
-    def self.run(path)
+    def self.run(path, _)
       backpacks = {}
       idx = 0
       FileReader.for_each_line(path) do |line|

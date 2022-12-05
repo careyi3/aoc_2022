@@ -31,7 +31,7 @@ module Day3
       'z' => 26
     }.freeze
 
-    def self.run(path)
+    def self.run(path, _)
       group = {}
       idx = 0
       count = 1

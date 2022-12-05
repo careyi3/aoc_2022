@@ -2,7 +2,7 @@
 
 module Day1
   module Part2
-    def self.run(path)
+    def self.run(path, _)
       elves = {}
       elf_count = 0
       elf_most_cals = 0
