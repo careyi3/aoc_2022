@@ -2,6 +2,17 @@
 
 module Day6
   module Part2
-    def self.run(path) end
+    def self.run(path, _)
+      chars = FileReader.read_file(path).chars
+      seq = []
+      chars.each_with_index do |char, idx|
+        seq.shift if seq.size == 14
+        seq << char
+        if seq.size == 14 && seq.uniq == seq
+          puts idx + 1
+          break
+        end
+      end
+    end
   end
 end

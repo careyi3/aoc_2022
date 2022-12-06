@@ -3,7 +3,7 @@
 class FileReader
   class << self
     def read_file(path)
-      File.read(path)
+      File.read(path.strip)
     end
 
     def for_each_line(path)
