@@ -1,0 +1,22 @@
+#! /bin/bash
+
+mkdir "solutions/${1}"
+
+touch "solutions/${1}/input"
+touch "solutions/${1}/sample"
+touch "solutions/${1}/first.rb"
+echo "# frozen_string_literal: true
+
+module Day${1}
+  module Part1
+    def self.run(path, _) end
+  end
+end" > "solutions/${1}/first.rb"
+touch "solutions/${1}/second.rb"
+echo "# frozen_string_literal: true
+
+module Day${1}
+  module Part2
+    def self.run(path, _) end
+  end
+end" > "solutions/${1}/second.rb"
