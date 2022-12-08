@@ -21,7 +21,6 @@ module Day8
       count = 0
       (1..width - 2).each do |x|
         (1..height - 2).each do |y|
-          puts "#{x},#{y}"
           left = grid[x][0, y].max
           right = grid[x][y + 1, width].max
           up = other_grid[y][0, x].max
