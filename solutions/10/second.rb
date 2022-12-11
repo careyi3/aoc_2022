@@ -17,7 +17,7 @@ module Day10
 
         unless command == 'noop'
           count += 1
-          crt[vidx][(count-1) % 40] = '#' if [x - 1, x, x + 1].include?((count-1) % 40)
+          crt[vidx][(count - 1) % 40] = '#' if [x - 1, x, x + 1].include?((count - 1) % 40)
           if count == output_idx
             vidx += 1
             output_idx += 40
@@ -25,7 +25,7 @@ module Day10
           x += val.to_i
         end
         count += 1
-        crt[vidx][(count-1) % 40] = '#' if [x - 1, x, x + 1].include?((count-1) % 40)
+        crt[vidx][(count - 1) % 40] = '#' if [x - 1, x, x + 1].include?((count - 1) % 40)
       end
       print(crt)
     end
