@@ -31,9 +31,8 @@ module Day12
         end
       end
       paths = []
-      points.each_with_index do |point, idx|
-        puts "#{idx}/#{points.size}"
-        visited = {}
+      visited = {}
+      points.each do |point|
         step(point[0], point[1], map, 0, visited)
         paths << visited["#{end_x}:#{end_y}"]
       end
