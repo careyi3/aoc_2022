@@ -3,13 +3,10 @@
 module Day13
   module Part2
     def self.run(path, _)
-      packets = []
+      packets = [[[2]], [[6]]]
       FileReader.for_each_line(path) do |line|
-        packets << eval(line)
+        packets << JSON.parse(line) unless line == ''
       end
-      packets << [[2]]
-      packets << [[6]]
-      packets = packets.compact
 
       packets =
         packets.sort do |left, right|

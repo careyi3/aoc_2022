@@ -26,15 +26,8 @@ module Day10
         end
         count += 1
         crt[vidx][(count - 1) % 40] = '#' if [x - 1, x, x + 1].include?((count - 1) % 40)
+        Visualisation.print_grid(crt, centre_x: 3, centre_y: 20, x_dim: 6, y_dim: 40, sleep: 0.01)
       end
-      print(crt)
-    end
-
-    def self.print(grid)
-      grid.each do |line|
-        puts line.join
-      end
-      ''
     end
   end
 end

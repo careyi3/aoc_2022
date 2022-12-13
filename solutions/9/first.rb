@@ -5,7 +5,7 @@ module Day9
     def self.run(path, sample)
       grid_size =
         if sample == 'sample'
-          20
+          40
         else
           800
         end
@@ -18,7 +18,7 @@ module Day9
       FileReader.for_each_line(path) do |line|
         dir, dist = line.split
         (1..dist.to_i).each do
-          grid[head_x][head_y] = '.'
+          grid[head_x][head_y] = visited["#{head_x}:#{head_y}"].nil? ? '.' : '#'
           grid[tail_x][tail_y] = '#'
           case dir
           when 'L'
@@ -33,6 +33,8 @@ module Day9
           tail_x, tail_y = update_tail(head_x, head_y, tail_x, tail_y)
           grid[tail_x][tail_y] = 'T'
           grid[head_x][head_y] = 'H'
+
+          Visualisation.print_grid(grid, centre_x: tail_x, centre_y: tail_y, sleep: 0.1)
 
           visited["#{tail_x}:#{tail_y}"] =
             if visited["#{tail_x}:#{tail_y}"].nil?
@@ -82,13 +84,6 @@ module Day9
       end
 
       [tail_x, tail_y]
-    end
-
-    def self.print(grid)
-      grid.each do |line|
-        puts line.map { |x| x || '.' }.join
-      end
-      ''
     end
   end
 end

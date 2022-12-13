@@ -5,7 +5,7 @@ module Day9
     def self.run(path, sample)
       grid_size =
         if sample == 'sample'
-          50
+          40
         else
           800
         end
@@ -20,7 +20,7 @@ module Day9
         (1..dist.to_i).each do
           positions.each do |key, val|
             grid[val[:x]][val[:y]] =
-              if key == '9'
+              if key == '9' || !visited["#{val[:x]}:#{val[:y]}"].nil?
                 '#'
               else
                 '.'
@@ -40,11 +40,15 @@ module Day9
 
           head_x = positions['H'][:x]
           head_y = positions['H'][:y]
+          grid[head_x][head_y] = 'H'
           (1..9).each do |num|
             head_x, head_y = update_tail(head_x, head_y, positions[num.to_s][:x], positions[num.to_s][:y])
             positions[num.to_s][:x] = head_x
             positions[num.to_s][:y] = head_y
+            grid[head_x][head_y] = num.to_s
           end
+
+          Visualisation.print_grid(grid, centre_x: head_x, centre_y: head_y, sleep: 0.1)
 
           positions.each do |key, val|
             grid[val[:x]][val[:y]] = key
@@ -118,13 +122,6 @@ module Day9
       end
 
       [tail_x, tail_y]
-    end
-
-    def self.print(grid)
-      grid.each do |line|
-        puts line.map { |x| x || '.' }.join(' ')
-      end
-      ''
     end
   end
 end

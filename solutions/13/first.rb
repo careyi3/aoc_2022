@@ -14,10 +14,10 @@ module Day13
           pair1 = nil
           pair2 = nil
         elsif pair1.nil?
-          pair1 = eval(line)
+          pair1 = JSON.parse(line)
           pair2 = nil
         else
-          pair2 = eval(line)
+          pair2 = JSON.parse(line)
         end
       end
 

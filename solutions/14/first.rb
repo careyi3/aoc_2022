@@ -2,6 +2,8 @@
 
 module Day14
   module Part1
-    def self.run(path, _) end
+    def self.run(path, _)
+      
+    end
   end
 end
