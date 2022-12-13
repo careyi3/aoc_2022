@@ -27,3 +27,6 @@ Metrics/BlockLength:
 
 Metrics/ModuleLength:
   Enabled: false
+
+Security/Eval:
+  Enabled: false
