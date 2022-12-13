@@ -33,3 +33,6 @@ Security/Eval:
 
 Metrics/ParameterLists:
   Enabled: false
+
+Layout/LineLength:
+  Enabled: false

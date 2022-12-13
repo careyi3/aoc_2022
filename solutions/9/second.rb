@@ -48,7 +48,7 @@ module Day9
             grid[head_x][head_y] = num.to_s
           end
 
-          Visualisation.print_grid(grid, centre_x: head_x, centre_y: head_y, sleep: 0.1)
+          Visualisation.print_grid(grid, centre_x: head_x, centre_y: head_y, sleep: 0.01)
 
           positions.each do |key, val|
             grid[val[:x]][val[:y]] = key

@@ -34,7 +34,7 @@ module Day9
           grid[tail_x][tail_y] = 'T'
           grid[head_x][head_y] = 'H'
 
-          Visualisation.print_grid(grid, centre_x: tail_x, centre_y: tail_y, sleep: 0.1)
+          Visualisation.print_grid(grid, centre_x: tail_x, centre_y: tail_y, sleep: 0.01)
 
           visited["#{tail_x}:#{tail_y}"] =
             if visited["#{tail_x}:#{tail_y}"].nil?
