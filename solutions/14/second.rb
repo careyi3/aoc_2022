@@ -2,9 +2,9 @@
 
 module Day14
   module Part2
-    def self.run(path, sample)
+    def self.run(path, input_type)
       floor =
-        if sample == 'sample'
+        if input_type == 'sample'
           9 + 2
         else
           160 + 2
@@ -40,39 +40,39 @@ module Day14
       end
 
       100_000.times do |num|
-        x, y = fall(map, 500, 0)
+        x, y = fall(map, 500, 0, input_type == 'sample')
         if x == 500 && y.zero?
-          # print(map, 80, 500)
           puts num + 1
           break
         end
       end
     end
 
-    def self.fall(map, x, y)
+    def self.fall(map, x, y, vis)
+      print(map) if vis
       return [nil, nil] if x >= 799 || y >= 799
 
       if map[y + 1][x] == '.'
         map[y][x] = '.'
         map[y + 1][x] = '+'
-        return fall(map, x, y + 1)
+        return fall(map, x, y + 1, vis)
       end
 
       if map[y + 1][x - 1] == '.'
         map[y][x] = '.'
         map[y + 1][x - 1] = '+'
-        return fall(map, x - 1, y + 1)
+        return fall(map, x - 1, y + 1, vis)
       end
 
       return [x, y] unless map[y + 1][x + 1] == '.'
 
       map[y][x] = '.'
       map[y + 1][x + 1] = '+'
-      fall(map, x + 1, y + 1)
+      fall(map, x + 1, y + 1, vis)
     end
 
-    def self.print(grid, x, y)
-      Visualisation.print_grid(grid, centre_x: x, centre_y: y, x_dim: 200, y_dim: 400, sleep: 0.001)
+    def self.print(grid)
+      Visualisation.print_grid(grid, centre_x: 6, centre_y: 500, x_dim: 12, y_dim: 23, sleep: 0.02, colour_char: '+', colour: :yellow)
     end
   end
 end

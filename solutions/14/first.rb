@@ -2,7 +2,7 @@
 
 module Day14
   module Part1
-    def self.run(path, _)
+    def self.run(path, input_type)
       map = Array.new(600) { Array.new(600) { '.' } }
       FileReader.for_each_line(path) do |line|
         rock_path = line.split(' -> ').map { |x| x.split(',').map(&:to_i) }
@@ -30,7 +30,7 @@ module Day14
       map[0][500] = '+'
       largest_y = 0
       2000.times do |num|
-        _, y = fall(map, 500, 0)
+        _, y = fall(map, 500, 0, input_type == 'sample')
         if y.nil?
           puts "Steps: #{num}"
           break
@@ -41,31 +41,31 @@ module Day14
       puts "Largest Y: #{largest_y + 1}"
     end
 
-    def self.fall(map, x, y)
-      # print(map, y, x)
+    def self.fall(map, x, y, vis)
+      print(map) if vis
       return [nil, nil] if x >= 599 || y >= 599
 
       if map[y + 1][x] == '.'
         map[y][x] = '.'
         map[y + 1][x] = '+'
-        return fall(map, x, y + 1)
+        return fall(map, x, y + 1, vis)
       end
 
       if map[y + 1][x - 1] == '.'
         map[y][x] = '.'
         map[y + 1][x - 1] = '+'
-        return fall(map, x - 1, y + 1)
+        return fall(map, x - 1, y + 1, vis)
       end
 
       return [x, y] unless map[y + 1][x + 1] == '.'
 
       map[y][x] = '.'
       map[y + 1][x + 1] = '+'
-      fall(map, x + 1, y + 1)
+      fall(map, x + 1, y + 1, vis)
     end
 
-    def self.print(grid, x, y)
-      Visualisation.print_grid(grid, centre_x: x, centre_y: y, x_dim: 60, y_dim: 60, sleep: 0.001)
+    def self.print(grid)
+      Visualisation.print_grid(grid, centre_x: 6, centre_y: 500, x_dim: 12, y_dim: 23, sleep: 0.02, colour_char: '+', colour: :yellow)
     end
   end
 end
