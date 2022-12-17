@@ -57,9 +57,14 @@ module Day17
       }
     }.freeze
 
+    WINDOW_SIZE = 1000
+    WINDOW_ADJUSTMENT = 10
+
     def self.run(path, _)
       jets = FileReader.read_file(path).chars.map { |x| x == '>' ? 1 : -1 }
-      grid = Array.new(10_000) { Array.new(7) { '+' } }
+      grid = Array.new(WINDOW_SIZE + WINDOW_ADJUSTMENT) { Array.new(7) { '+' } }
+      sum_biggest_height = 0
+      last_biggest_height = 0
       biggest_height = 0
       count = 1
       moves = 0
@@ -67,6 +72,13 @@ module Day17
         rock_type = (count % 5).zero? ? 5 : count % 5
         at_rest = false
         x = 2
+        if biggest_height >= WINDOW_SIZE
+          sum_biggest_height += (biggest_height - last_biggest_height)
+          biggest_height -= WINDOW_ADJUSTMENT
+          last_biggest_height = biggest_height
+          10.times { grid << Array.new(7) { '+' } }
+          10.times { grid.shift }
+        end
         y = biggest_height + 3
         until at_rest
           rock_points = get_grid_points(x, y, rock_type)
@@ -74,7 +86,6 @@ module Day17
             grid[rock_point[0]][rock_point[1]] = '#'
           end
           print(grid, biggest_height)
-          #binding.pry
 
           # move left or right
           new_x = x + (moves.zero? ? jets[0] : jets[moves % jets.size])
@@ -82,7 +93,6 @@ module Day17
           move = true
           if check
             lr_rock_points = get_grid_points(new_x, y, rock_type)
-            #binding.pry
             (lr_rock_points - rock_points).each do |rock_point|
               next unless move
 
@@ -100,7 +110,6 @@ module Day17
               print(grid, biggest_height)
             end
           end
-          #binding.pry
 
           # move down
           new_y = y - 1
@@ -128,7 +137,6 @@ module Day17
               grid[rock_point[0]][rock_point[1]] = '#'
             end
             print(grid, biggest_height)
-            #binding.pry
           else
             at_rest = true
           end
@@ -139,10 +147,12 @@ module Day17
 
           moves += 1
         end
-        #binding.pry
+        if count == 2022
+          sum_biggest_height += (biggest_height - last_biggest_height)
+        end
         count += 1
       end
-      puts biggest_height
+      puts sum_biggest_height
     end
 
     def self.get_grid_points(x, y, rock_type)
@@ -154,7 +164,7 @@ module Day17
     end
 
     def self.print(grid, y)
-      #Visualisation.print_grid(grid, centre_x: y, centre_y: 4, x_dim: 40, y_dim: 8, sleep: 0.1, spacer: ' ', colour_char: '#', colour: :red, flip: true)
+      #Visualisation.print_grid(grid, centre_x: 20, centre_y: 4, x_dim: 40, y_dim: 8, sleep: 0.1, spacer: ' ', colour_char: '#', colour: :red, flip: true)
     end
   end
 end
