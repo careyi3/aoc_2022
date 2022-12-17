@@ -36,3 +36,6 @@ Metrics/ParameterLists:
 
 Layout/LineLength:
   Enabled: false
+
+Metrics/BlockNesting:
+  Enabled: false
