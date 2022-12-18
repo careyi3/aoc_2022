@@ -57,8 +57,9 @@ module Day17
       }
     }.freeze
 
-    WINDOW_SIZE = 1000
+    WINDOW_SIZE = 100
     WINDOW_ADJUSTMENT = 10
+    LOOP_COUNT = 4000
 
     def self.run(path, _)
       jets = FileReader.read_file(path).chars.map { |x| x == '>' ? 1 : -1 }
@@ -68,7 +69,8 @@ module Day17
       biggest_height = 0
       count = 1
       moves = 0
-      while count < 2023
+      cache = {}
+      while count < LOOP_COUNT
         rock_type = (count % 5).zero? ? 5 : count % 5
         at_rest = false
         x = 2
@@ -147,12 +149,46 @@ module Day17
 
           moves += 1
         end
-        if count == 2022
+        jets_cache_key = moves.zero? ? 0 : moves % jets.size
+        heights = Array.new(7) { '.' }
+        grid.reverse.each_with_index do |row, depth|
+          row.each_with_index do |cell, idx|
+            next unless heights[idx] == '.'
+
+            if cell == '#'
+              heights[idx] = biggest_height - (grid.size - depth)
+            end
+          end
+        end
+        cache_key = "#{jets_cache_key}:#{rock_type}:#{heights.join(':')}"
+        cache[cache_key] =
+          if cache[cache_key].nil?
+            [count, sum_biggest_height + (biggest_height - last_biggest_height)]
+          else
+            cache[cache_key] << [count, sum_biggest_height + (biggest_height - last_biggest_height)]
+          end
+
+        if count == LOOP_COUNT - 1
           sum_biggest_height += (biggest_height - last_biggest_height)
         end
         count += 1
       end
       puts sum_biggest_height
+      #197 313
+      #1942 3066
+      #3687 5819
+
+      # initial_steps = 197
+      # initial_height = 313
+      # height = initial_height
+      # cycle_length = 1745
+      # cycle_hight = 2753
+      # full_loops = (1000000000000 - 197)/cycle_length
+      # height += full_loops * cycle_hight
+      # remainder_cycles = (1000000000000 - 197)%cycle_length
+      # remainder_cycles_height = 1629
+      # height += (remainder_cycles_height - initial_height)
+      binding.pry
     end
 
     def self.get_grid_points(x, y, rock_type)

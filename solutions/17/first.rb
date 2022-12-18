@@ -57,8 +57,9 @@ module Day17
       }
     }.freeze
 
-    WINDOW_SIZE = 1000
+    WINDOW_SIZE = 100
     WINDOW_ADJUSTMENT = 10
+    LOOP_COUNT = 1011
 
     def self.run(path, _)
       jets = FileReader.read_file(path).chars.map { |x| x == '>' ? 1 : -1 }
@@ -68,7 +69,7 @@ module Day17
       biggest_height = 0
       count = 1
       moves = 0
-      while count < 2023
+      while count < LOOP_COUNT
         rock_type = (count % 5).zero? ? 5 : count % 5
         at_rest = false
         x = 2
@@ -147,7 +148,7 @@ module Day17
 
           moves += 1
         end
-        if count == 2022
+        if count == LOOP_COUNT - 1
           sum_biggest_height += (biggest_height - last_biggest_height)
         end
         count += 1
