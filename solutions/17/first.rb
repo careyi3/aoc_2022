@@ -59,7 +59,7 @@ module Day17
 
     WINDOW_SIZE = 100
     WINDOW_ADJUSTMENT = 10
-    LOOP_COUNT = 1011
+    LOOP_COUNT = 2023
 
     def self.run(path, _)
       jets = FileReader.read_file(path).chars.map { |x| x == '>' ? 1 : -1 }
