@@ -3,25 +3,31 @@
 module Day18
   module Part1
     def self.run(path, _)
-      cubes = []
+      cubes = {}
       FileReader.for_each_line(path) do |line|
         x, y, z = line.split(',').map(&:to_i)
-        cubes << { x:, y:, z:, exposed: 6 }
+        cubes["#{x}:#{y}:#{z}"] = { x:, y:, z:, exposed: 0 }
       end
-      cubes.each_with_index do |current, cidx|
-        non_unique_faces = []
-        cubes.each do |target, tidx|
-          next if cidx == tidx
 
-          non_unique_faces << [target[:x], target[:y], target[:z]] if (current[:x] == target[:x] && current[:y] == target[:y]) && (current[:z] == target[:z] + 1 || current[:z] == target[:z] - 1)
-
-          non_unique_faces << [target[:x], target[:y], target[:z]] if (current[:x] == target[:x] && current[:z] == target[:z]) && (current[:y] == target[:y] + 1 || current[:y] == target[:y] - 1)
-
-          non_unique_faces << [target[:x], target[:y], target[:z]] if (current[:z] == target[:z] && current[:y] == target[:y]) && (current[:x] == target[:x] + 1 || current[:x] == target[:x] - 1)
+      cubes.each do |_, current|
+        x = current[:x]
+        y = current[:y]
+        z = current[:z]
+        faces = {
+          [x, y, z + 1].join(':') => { coords: [x, y, z + 1] },
+          [x, y, z - 1].join(':') => { coords: [x, y, z - 1] },
+          [x, y + 1, z].join(':') => { coords: [x, y + 1, z] },
+          [x, y - 1, z].join(':') => { coords: [x, y - 1, z] },
+          [x + 1, y, z].join(':') => { coords: [x + 1, y, z] },
+          [x - 1, y, z].join(':') => { coords: [x - 1, y, z] }
+        }
+        exposed = []
+        faces.each do |key, _|
+          exposed << key if cubes[key].nil?
         end
-        current[:exposed] = current[:exposed] - non_unique_faces.uniq.count
+        current[:exposed] = exposed.size
       end
-      puts cubes.map { |x| x[:exposed] }.sum
+      puts cubes.values.map { |x| x[:exposed] }.sum
     end
   end
 end

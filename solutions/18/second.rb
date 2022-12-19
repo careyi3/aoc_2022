@@ -42,7 +42,7 @@ module Day18
       depth += 1
       return false unless visited["#{x}:#{y}:#{z}"].nil?
       return true if depth == 2000
-      return true if x.negative? && y.negative? && z.negative?
+      return true if (x.negative? || x > 40) && (y.negative? || y > 40) && (z.negative? || z > 40)
       return false unless cubes["#{x}:#{y}:#{z}"].nil?
 
       visited["#{x}:#{y}:#{z}"] = true
