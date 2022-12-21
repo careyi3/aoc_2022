@@ -2,6 +2,9 @@
 
 module Day19
   module Part1
+    MINUTES = 24
+    MAX_BLUEPRINTS = 30
+
     def self.run(path, _)
       blueprints = {}
       FileReader.for_each_line(path) do |line|
@@ -13,43 +16,34 @@ module Day19
         blueprints[data[0]] = { geode:, obs:, clay:, ore: }
       end
       blueprint_geodes = {}
-      threads = []
       blueprints.each do |id, blueprint|
+        next if id > MAX_BLUEPRINTS
+
         # Do work
         resources = { ore: 0, clay: 0, obs: 0, geode: 0 }
         robots = { ore: 1, clay: 0, obs: 0, geode: 0 }
         best = {}
         build(id, blueprint, {}, resources, robots, 0, best)
-        blueprint_geodes[id] = best[24]
+        blueprint_geodes[id] = best[MINUTES][:geode]
         puts "#{id}: #{blueprint_geodes[id]}"
       end
-      threads.each(&:join)
       puts blueprint_geodes.sort.map { |x| x[0] * x[1] }.sum
     end
 
     def self.build(id, blueprint, geodes, resources, robots, time, best)
       key = "#{resources.values.join(':')}:#{robots.values.join(':')}:#{time}"
-      rank = resources[:geode]
       return unless geodes[key].nil?
 
-      if best[time].nil?
-        best[time] = rank
-        puts "#{id}: #{key} - #{best[time]}"
-      end
-
-      if best[time] < rank
-        best[time] = rank
-        puts "#{id}: #{key} - #{best[time]}"
-      end
-
-      return if rank < best[time] - 2
-
-      if time == 24
-        geodes[key] = resources[:geode]
-        return
-      end
-
       geodes[key] = resources[:geode]
+      rank = { geode: resources[:geode], rank: resources[:geode] }
+      return if !best[time].nil? && rank[:rank] < best[time][:rank] - 2
+
+      if best[time].nil? || best[time][:rank] < rank[:rank]
+        best[time] = rank
+        puts "#{id}: #{key} - #{best[time]}"
+      end
+
+      return if time == MINUTES
 
       # Can afford
       can_afford = {}
