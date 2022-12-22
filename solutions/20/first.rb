@@ -23,7 +23,12 @@ module Day20
         new_data.insert(move_to, val)
       end
       zero_idx = new_data.find_index(0)
-      puts [new_data[(zero_idx + 1000) % data_size], new_data[(zero_idx + 2000) % data_size], new_data[(zero_idx + 3000) % data_size]].sum
+      ans = [
+        new_data[(zero_idx + 1000) % data_size],
+        new_data[(zero_idx + 2000) % data_size],
+        new_data[(zero_idx + 3000) % data_size]
+      ].sum
+      puts ans
     end
   end
 end
