@@ -9,7 +9,7 @@ module Day21
         monkeys[key] =
           if val.to_i.zero?
             x, op, y = val.split
-            -> { eval("monkeys['#{x}'].call #{op} monkeys['#{y}'].call") }
+            -> { eval("monkeys['#{x}'].call #{op} monkeys['#{y}'].call", binding, __FILE__, __LINE__) }
           else
             -> { val.to_i }
           end
