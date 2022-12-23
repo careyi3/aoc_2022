@@ -39,3 +39,6 @@ Layout/LineLength:
 
 Metrics/BlockNesting:
   Enabled: false
+
+Style/DocumentDynamicEvalDefinition:
+  Enabled: false
