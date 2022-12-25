@@ -3,7 +3,7 @@
 require('colorized_string')
 
 module Visualisation
-  def self.print_grid(grid, centre_x: 20, centre_y: 20, x_dim: 40, y_dim: 40, sleep: 0.01, spacer: ' ', colour_char: nil, colour: nil, flip: false)
+  def self.print_grid(grid, centre_x: 20, centre_y: 20, x_dim: 40, y_dim: 40, sleep: 0.01, spacer: ' ', colour_char: nil, colour: nil, flip: false, empty_char: '.')
     system('clear')
     x_origin = centre_x - (x_dim / 2) >= 0 ? centre_x - (x_dim / 2) : 0
     y_origin = centre_y - (y_dim / 2) >= 0 ? centre_y - (y_dim / 2) : 0
@@ -12,7 +12,7 @@ module Visualisation
         (y_origin..y_origin + y_dim - 1).each do |y|
           grid_x = grid[x]
           val = grid[x].nil? ? nil : grid_x[y]
-          val ||= '.'
+          val ||= empty_char
           print_and_flush("#{val}#{spacer}", colour_char, colour)
         end
         puts ''.black
@@ -22,7 +22,7 @@ module Visualisation
         (y_origin..y_origin + y_dim - 1).each do |y|
           grid_x = grid[x]
           val = grid[x].nil? ? nil : grid_x[y]
-          val ||= '.'
+          val ||= empty_char
           print_and_flush("#{val}#{spacer}", colour_char, colour)
         end
         puts ''.black

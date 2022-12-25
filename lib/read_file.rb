@@ -6,9 +6,10 @@ class FileReader
       File.read(path.strip)
     end
 
-    def for_each_line(path)
+    def for_each_line(path, no_strip: false)
       File.readlines(path).each do |line|
-        yield(line.strip)
+        line = line.strip unless no_strip
+        yield(line)
       end
     end
   end
